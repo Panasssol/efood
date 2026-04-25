@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Tag from '../Tag'
-import type { Restaurant } from '../../data/restaurants'
+import type { Restaurant } from '../../types'
 
 const Card = styled.div`
   background-color: #FFFFFF;

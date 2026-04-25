@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'
 import Hero from '../../components/Hero'
 import Footer from '../../components/Footer'
 import MenuItemCard from '../../components/MenuItem'
-import restaurants from '../../data/restaurants'
+import Loader from '../../components/Loader'
+import { useRestaurant } from '../../api'
 
 const MenuSection = styled.section`
   padding: 56px 0 0;
@@ -23,20 +24,23 @@ const Grid = styled.div`
   }
 `
 
-const NotFound = styled.div`
+const ErrorMsg = styled.p`
   text-align: center;
-  padding: 120px 16px;
   color: #E66767;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 18px;
+  padding: 80px 0;
 `
 
 const Restaurant = () => {
   const { id } = useParams()
-  const restaurant = restaurants.find((r) => r.id === Number(id))
+  const { restaurant, loading, error } = useRestaurant(id)
 
-  if (!restaurant) {
-    return <NotFound>Restaurante não encontrado</NotFound>
+  if (loading) {
+    return <Loader />
+  }
+
+  if (error || !restaurant) {
+    return <ErrorMsg>{error || 'Restaurante não encontrado'}</ErrorMsg>
   }
 
   return (

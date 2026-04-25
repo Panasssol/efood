@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import type { MenuItem as MenuItemType } from '../../data/restaurants'
-import { useState } from 'react'
+import type { MenuItem as MenuItemType } from '../../types'
+import { useState, useEffect } from 'react'
 
 const Card = styled.div`
   background-color: #E66767;
@@ -59,42 +59,51 @@ const Button = styled.button`
   }
 `
 
-/* Modal overlay */
-const Overlay = styled.div`
+/* ===== MODAL ===== */
+
+const Overlay = styled.div<{ $visible: boolean }>`
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
+  padding: 16px;
+  opacity: ${(p) => (p.$visible ? 1 : 0)};
+  transition: opacity 0.3s ease;
 `
 
-const ModalBox = styled.div`
+const ModalBox = styled.div<{ $visible: boolean }>`
   background-color: #E66767;
   color: #FFF8F2;
   border-radius: 8px;
-  max-width: 640px;
-  width: 90%;
+  max-width: 1024px;
+  width: 100%;
   display: flex;
-  gap: 24px;
-  padding: 32px;
   position: relative;
+  transform: ${(p) => (p.$visible ? 'scale(1)' : 'scale(0.92)')};
+  opacity: ${(p) => (p.$visible ? 1 : 0)};
+  transition: transform 0.3s ease, opacity 0.3s ease;
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 `
 
 const ModalImage = styled.img`
   width: 280px;
-  height: 280px;
+  min-height: 280px;
   object-fit: cover;
-  border-radius: 8px;
+  display: block;
+  border-radius: 8px 0 0 8px;
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     width: 100%;
-    height: 200px;
+    height: 220px;
+    border-radius: 8px 8px 0 0;
   }
 `
 
@@ -102,12 +111,13 @@ const ModalContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 32px;
+  gap: 8px;
 `
 
 const ModalTitle = styled.h3`
   font-size: 18px;
   font-weight: 900;
-  margin-bottom: 16px;
 `
 
 const ModalDescription = styled.p`
@@ -119,7 +129,12 @@ const ModalDescription = styled.p`
 
 const ModalInfo = styled.p`
   font-size: 14px;
-  margin: 16px 0;
+  font-weight: 400;
+  margin-top: 12px;
+
+  span {
+    font-weight: 300;
+  }
 `
 
 const ModalButton = styled.button`
@@ -128,14 +143,19 @@ const ModalButton = styled.button`
   border: none;
   font-size: 14px;
   font-weight: 700;
-  padding: 8px 16px;
+  padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
   align-self: flex-start;
-  transition: background-color 0.2s;
+  margin-top: 16px;
+  transition: background-color 0.2s, transform 0.15s;
 
   &:hover {
     background-color: #f0e6dc;
+  }
+
+  &:active {
+    transform: scale(0.97);
   }
 `
 
@@ -154,6 +174,8 @@ const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
+  transition: opacity 0.2s;
 
   &:hover {
     opacity: 0.7;
@@ -164,11 +186,30 @@ type MenuItemProps = {
   item: MenuItemType
 }
 
+const formatPrice = (preco: number) =>
+  `R$ ${preco.toFixed(2).replace('.', ',')}`
+
 const MenuItemCard = ({ item }: MenuItemProps) => {
   const [showModal, setShowModal] = useState(false)
+  const [animateIn, setAnimateIn] = useState(false)
 
-  const formatPrice = (preco: number) =>
-    `R$ ${preco.toFixed(2).replace('.', ',')}`
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden'
+      requestAnimationFrame(() => setAnimateIn(true))
+    } else {
+      document.body.style.overflow = ''
+      setAnimateIn(false)
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [showModal])
+
+  const handleClose = () => {
+    setAnimateIn(false)
+    setTimeout(() => setShowModal(false), 300)
+  }
 
   return (
     <>
@@ -184,14 +225,16 @@ const MenuItemCard = ({ item }: MenuItemProps) => {
       </Card>
 
       {showModal && (
-        <Overlay onClick={() => setShowModal(false)}>
-          <ModalBox onClick={(e) => e.stopPropagation()}>
-            <CloseButton onClick={() => setShowModal(false)}>✕</CloseButton>
+        <Overlay $visible={animateIn} onClick={handleClose}>
+          <ModalBox $visible={animateIn} onClick={(e) => e.stopPropagation()}>
+            <CloseButton onClick={handleClose}>✕</CloseButton>
             <ModalImage src={item.foto} alt={item.nome} />
             <ModalContent>
               <ModalTitle>{item.nome}</ModalTitle>
               <ModalDescription>{item.descricao}</ModalDescription>
-              <ModalInfo>Serve: {item.porcao}</ModalInfo>
+              <ModalInfo>
+                Serve: <span>{item.porcao}</span>
+              </ModalInfo>
               <ModalButton>
                 Adicionar ao carrinho - {formatPrice(item.preco)}
               </ModalButton>

@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import type { MenuItem as MenuItemType } from '../../types'
 import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { addItem } from '../../store/cartSlice'
 
 const Card = styled.div`
   background-color: #E66767;
@@ -104,6 +106,7 @@ const ModalImage = styled.img`
     width: 100%;
     height: 220px;
     border-radius: 8px 8px 0 0;
+    min-height: auto;
   }
 `
 
@@ -137,9 +140,9 @@ const ModalInfo = styled.p`
   }
 `
 
-const ModalButton = styled.button`
-  background-color: #FFF8F2;
-  color: #E66767;
+const ModalButton = styled.button<{ $added?: boolean }>`
+  background-color: ${(p) => (p.$added ? '#27ae60' : '#FFF8F2')};
+  color: ${(p) => (p.$added ? '#FFF8F2' : '#E66767')};
   border: none;
   font-size: 14px;
   font-weight: 700;
@@ -148,10 +151,10 @@ const ModalButton = styled.button`
   cursor: pointer;
   align-self: flex-start;
   margin-top: 16px;
-  transition: background-color 0.2s, transform 0.15s;
+  transition: background-color 0.3s, color 0.3s, transform 0.15s;
 
   &:hover {
-    background-color: #f0e6dc;
+    opacity: 0.9;
   }
 
   &:active {
@@ -190,8 +193,10 @@ const formatPrice = (preco: number) =>
   `R$ ${preco.toFixed(2).replace('.', ',')}`
 
 const MenuItemCard = ({ item }: MenuItemProps) => {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
   const [animateIn, setAnimateIn] = useState(false)
+  const [added, setAdded] = useState(false)
 
   useEffect(() => {
     if (showModal) {
@@ -209,6 +214,15 @@ const MenuItemCard = ({ item }: MenuItemProps) => {
   const handleClose = () => {
     setAnimateIn(false)
     setTimeout(() => setShowModal(false), 300)
+  }
+
+  const handleAddToCart = () => {
+    dispatch(addItem(item))
+    setAdded(true)
+    setTimeout(() => {
+      setAdded(false)
+      handleClose()
+    }, 800)
   }
 
   return (
@@ -235,8 +249,10 @@ const MenuItemCard = ({ item }: MenuItemProps) => {
               <ModalInfo>
                 Serve: <span>{item.porcao}</span>
               </ModalInfo>
-              <ModalButton>
-                Adicionar ao carrinho - {formatPrice(item.preco)}
+              <ModalButton $added={added} onClick={handleAddToCart}>
+                {added
+                  ? '✓ Adicionado!'
+                  : `Adicionar ao carrinho - ${formatPrice(item.preco)}`}
               </ModalButton>
             </ModalContent>
           </ModalBox>

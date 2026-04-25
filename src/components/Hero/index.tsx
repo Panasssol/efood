@@ -1,5 +1,8 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '../../store'
+import { toggleCart } from '../../store/cartSlice'
 
 const HeroWrapper = styled.div<{ $bg: string }>`
   position: relative;
@@ -39,6 +42,25 @@ const NavLink = styled(Link)`
   }
 `
 
+const CartButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF8F2;
+  color: #E66767;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.85;
+  }
+`
+
 const HeroContent = styled.div`
   position: absolute;
   bottom: 32px;
@@ -52,6 +74,7 @@ const Tag = styled.span`
   font-size: 14px;
   font-weight: 300;
   letter-spacing: 0.5px;
+  text-transform: capitalize;
 `
 
 const Title = styled.h2`
@@ -67,21 +90,31 @@ type HeroProps = {
   capa: string
 }
 
-const Hero = ({ titulo, tipo, capa }: HeroProps) => (
-  <HeroWrapper $bg={capa}>
-    <div className="container">
-      <HeroNav>
-        <NavLink to="/">Restaurantes</NavLink>
-        <NavLink to="/">efood</NavLink>
-      </HeroNav>
-    </div>
-    <HeroContent>
+const Hero = ({ titulo, tipo, capa }: HeroProps) => {
+  const dispatch = useDispatch()
+  const totalItems = useSelector((state: RootState) =>
+    state.cart.items.reduce((sum, i) => sum + i.quantidade, 0)
+  )
+
+  return (
+    <HeroWrapper $bg={capa}>
       <div className="container">
-        <Tag>{tipo}</Tag>
-        <Title>{titulo}</Title>
+        <HeroNav>
+          <NavLink to="/">Restaurantes</NavLink>
+          <NavLink to="/">efood</NavLink>
+          <CartButton onClick={() => dispatch(toggleCart())}>
+            🛒 {totalItems} produto(s)
+          </CartButton>
+        </HeroNav>
       </div>
-    </HeroContent>
-  </HeroWrapper>
-)
+      <HeroContent>
+        <div className="container">
+          <Tag>{tipo}</Tag>
+          <Title>{titulo}</Title>
+        </div>
+      </HeroContent>
+    </HeroWrapper>
+  )
+}
 
 export default Hero

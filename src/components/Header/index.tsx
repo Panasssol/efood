@@ -1,13 +1,27 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '../../store'
+import { toggleCart } from '../../store/cartSlice'
 
 const HeaderBar = styled.header`
   background-color: #E66767;
   padding: 40px 0;
-  text-align: center;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100"><path fill="%23FFF8F2" fill-opacity="0.05" d="M0,0L48,5.3C96,11,192,21,288,42.7C384,64,480,96,576,96C672,96,768,64,864,48C960,32,1056,32,1152,37.3C1248,43,1344,53,1392,58.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"/></svg>');
-  background-size: cover;
   position: relative;
+`
+
+const Container = styled.div`
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 16px;
+  }
 `
 
 const Logo = styled.h1`
@@ -27,21 +41,76 @@ const Logo = styled.h1`
   }
 `
 
-const Subtitle = styled.p`
+const Center = styled.p`
   color: #FFF8F2;
   font-size: 18px;
-  margin-top: 16px;
   font-weight: 300;
   letter-spacing: 0.5px;
+  text-align: center;
+  flex: 1;
 `
 
-const Header = () => (
-  <HeaderBar>
-    <Logo>
-      <Link to="/">efood</Link>
-    </Logo>
-    <Subtitle>Viva experiências gastronômicas no conforto da sua casa</Subtitle>
-  </HeaderBar>
+const CartButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFF8F2;
+  color: #E66767;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`
+
+const Badge = styled.span`
+  background: #E66767;
+  color: #FFF8F2;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const CartIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="9" cy="21" r="1" />
+    <circle cx="20" cy="21" r="1" />
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+  </svg>
 )
+
+const Header = () => {
+  const dispatch = useDispatch()
+  const totalItems = useSelector((state: RootState) =>
+    state.cart.items.reduce((sum, i) => sum + i.quantidade, 0)
+  )
+
+  return (
+    <HeaderBar>
+      <Container>
+        <Logo>
+          <Link to="/">efood</Link>
+        </Logo>
+        <Center>Viva experiências gastronômicas no conforto da sua casa</Center>
+        <CartButton onClick={() => dispatch(toggleCart())}>
+          <CartIcon />
+          {totalItems} produto(s)
+          {totalItems > 0 && <Badge>{totalItems}</Badge>}
+        </CartButton>
+      </Container>
+    </HeaderBar>
+  )
+}
 
 export default Header

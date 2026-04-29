@@ -11,7 +11,7 @@ const RestaurantList = styled.section`
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px 24px;
+  gap: 48px 32px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;

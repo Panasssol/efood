@@ -6,20 +6,22 @@ import MenuItemCard from '../../components/MenuItem'
 import restaurants from '../../data/restaurants'
 
 const MenuSection = styled.section`
-  padding: 56px 0 0;
+  padding: 56px 0;
+  background: #FFF8F2;
 `
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 320px);
   gap: 32px;
+  justify-content: center;
 
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 320px);
   }
 
-  @media (max-width: 560px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 700px) {
+    grid-template-columns: 320px;
   }
 `
 

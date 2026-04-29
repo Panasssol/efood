@@ -5,19 +5,11 @@ import type { Restaurant } from '../../data/restaurants'
 
 const Card = styled.div`
   background-color: #FFFFFF;
-  border: 1px solid #E66767;
-  border-radius: 8px;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(230, 103, 103, 0.15);
-  }
 `
 
 const CardImage = styled.div<{ $bg: string }>`
-  height: 220px;
+  height: 217px;
   background-image: url(${(props) => props.$bg});
   background-size: cover;
   background-position: center;
@@ -29,64 +21,82 @@ const TagsWrapper = styled.div`
   top: 16px;
   right: 16px;
   display: flex;
-  gap: 4px;
+  gap: 8px;
 `
 
 const CardBody = styled.div`
-  padding: 8px 8px 12px;
+  padding: 8px;
+  background: #FFFFFF;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #E66767;
 `
 
 const TitleRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 `
 
 const Title = styled.h3`
-  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
   color: #E66767;
 `
 
 const Rating = styled.span`
-  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
   color: #E66767;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 `
 
 const Star = styled.span`
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #FFB930;
   font-size: 20px;
 `
 
 const Description = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  color: #333;
+  color: #E66767;
   margin-bottom: 16px;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 `
 
 const ButtonLink = styled(Link)`
   display: inline-block;
-  background-color: #E66767;
-  color: #FFF8F2;
-  font-size: 14px;
+  width: 82px;
+  height: 24px;
+  background: #E66767;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 700;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #cc5555;
-  }
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  color: #FFEBD9;
+  text-decoration: none;
 `
 
 type RestaurantCardProps = {
@@ -105,8 +115,8 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => (
       <TitleRow>
         <Title>{restaurant.titulo}</Title>
         <Rating>
-          <Star>★</Star>
           {restaurant.avaliacao}
+          <Star>★</Star>
         </Rating>
       </TitleRow>
       <Description>{restaurant.descricao}</Description>

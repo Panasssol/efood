@@ -3,63 +3,74 @@ import type { MenuItem as MenuItemType } from '../../data/restaurants'
 import { useState } from 'react'
 
 const Card = styled.div`
-  background-color: #E66767;
-  border-radius: 8px;
+  background: #E66767;
+  width: 320px;
+  height: 338px;
   overflow: hidden;
-  color: #FFF8F2;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
+  position: relative;
 `
 
 const Image = styled.img`
-  width: 100%;
-  height: 168px;
+  width: 304px;
+  height: 167px;
   object-fit: cover;
   display: block;
+  margin: 8px auto 0;
 `
 
 const Body = styled.div`
-  padding: 8px;
+  padding: 0 8px 8px;
 `
 
 const Title = styled.h4`
-  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 900;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFEBD9;
+  margin-top: 8px;
   margin-bottom: 8px;
 `
 
 const Description = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  font-weight: 300;
+  color: #FFEBD9;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 8px;
 `
 
 const Button = styled.button`
-  background-color: #FFF8F2;
-  color: #E66767;
+  display: block;
+  width: 304px;
+  height: 24px;
+  background: #FFEBD9;
   border: none;
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 700;
-  padding: 8px 12px;
-  border-radius: 4px;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #E66767;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
 
   &:hover {
-    background-color: #f0e6dc;
+    opacity: 0.9;
   }
 `
 
-/* Modal overlay */
+/* Modal */
 const Overlay = styled.div`
   position: fixed;
   inset: 0;
@@ -72,8 +83,7 @@ const Overlay = styled.div`
 
 const ModalBox = styled.div`
   background-color: #E66767;
-  color: #FFF8F2;
-  border-radius: 8px;
+  color: #FFEBD9;
   max-width: 640px;
   width: 90%;
   display: flex;
@@ -90,7 +100,6 @@ const ModalImage = styled.img`
   width: 280px;
   height: 280px;
   object-fit: cover;
-  border-radius: 8px;
 
   @media (max-width: 640px) {
     width: 100%;
@@ -105,37 +114,42 @@ const ModalContent = styled.div`
 `
 
 const ModalTitle = styled.h3`
-  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 900;
+  font-size: 18px;
+  color: #FFEBD9;
   margin-bottom: 16px;
 `
 
 const ModalDescription = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  font-weight: 300;
+  color: #FFEBD9;
   flex: 1;
 `
 
 const ModalInfo = styled.p`
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
+  color: #FFEBD9;
   margin: 16px 0;
 `
 
 const ModalButton = styled.button`
-  background-color: #FFF8F2;
+  background: #FFEBD9;
   color: #E66767;
   border: none;
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 700;
+  font-size: 14px;
   padding: 8px 16px;
-  border-radius: 4px;
   cursor: pointer;
   align-self: flex-start;
-  transition: background-color 0.2s;
 
   &:hover {
-    background-color: #f0e6dc;
+    opacity: 0.9;
   }
 `
 
@@ -145,7 +159,7 @@ const CloseButton = styled.button`
   right: 8px;
   background: none;
   border: none;
-  color: #FFF8F2;
+  color: #FFEBD9;
   font-size: 24px;
   cursor: pointer;
   line-height: 1;
@@ -154,10 +168,6 @@ const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `
 
 type MenuItemProps = {
@@ -177,10 +187,8 @@ const MenuItemCard = ({ item }: MenuItemProps) => {
         <Body>
           <Title>{item.nome}</Title>
           <Description>{item.descricao}</Description>
-          <Button onClick={() => setShowModal(true)}>
-            Mais detalhes
-          </Button>
         </Body>
+        <Button onClick={() => setShowModal(true)}>Mais detalhes</Button>
       </Card>
 
       {showModal && (

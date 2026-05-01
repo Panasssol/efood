@@ -1,7 +1,48 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import bgHeader from '../../assets/header-bg.png'
+import logoImg from '../../assets/logo.png'
 
-const HeroWrapper = styled.div<{ $bg: string }>`
+const HeroNav = styled.div`
+  background-color: #FFF8F2;
+  background-image: url(${bgHeader});
+  background-repeat: repeat;
+  background-size: auto;
+`
+
+const HeroNavInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+`
+
+const NavLink = styled(Link)`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 21px;
+  color: #E66767;
+  text-decoration: none;
+`
+
+const CartText = styled.span`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: right;
+  color: #E66767;
+`
+
+const LogoImg = styled.img`
+  width: 125px;
+  height: auto;
+`
+
+const HeroImage = styled.div<{ $bg: string }>`
   position: relative;
   height: 280px;
   background-image: url(${(props) => props.$bg});
@@ -12,53 +53,45 @@ const HeroWrapper = styled.div<{ $bg: string }>`
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%);
+    background: rgba(0, 0, 0, 0.5);
   }
 `
 
-const HeroNav = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 24px;
-  position: relative;
-  z-index: 1;
-`
-
-const NavLink = styled(Link)`
-  color: #E66767;
-  font-weight: 700;
-  font-size: 18px;
-  background-color: #FFF8F2;
-  padding: 6px 16px;
-  border-radius: 6px;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.85;
-  }
-`
-
-const HeroContent = styled.div`
+const HeroType = styled.div`
   position: absolute;
-  bottom: 32px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1;
+  padding-top: 24px;
 `
 
-const Tag = styled.span`
-  color: #FFF8F2;
-  font-size: 14px;
-  font-weight: 300;
-  letter-spacing: 0.5px;
+const HeroTitle = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding-bottom: 32px;
 `
 
-const Title = styled.h2`
-  color: #FFF8F2;
+const RestaurantType = styled.span`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 100;
   font-size: 32px;
+  line-height: 38px;
+  color: #FFFFFF;
+  display: block;
+`
+
+const RestaurantTitle = styled.h2`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 900;
-  margin-top: 16px;
+  font-size: 32px;
+  line-height: 38px;
+  color: #FFFFFF;
 `
 
 type HeroProps = {
@@ -68,20 +101,29 @@ type HeroProps = {
 }
 
 const Hero = ({ titulo, tipo, capa }: HeroProps) => (
-  <HeroWrapper $bg={capa}>
-    <div className="container">
-      <HeroNav>
-        <NavLink to="/">Restaurantes</NavLink>
-        <NavLink to="/">efood</NavLink>
-      </HeroNav>
-    </div>
-    <HeroContent>
+  <>
+    <HeroNav>
       <div className="container">
-        <Tag>{tipo}</Tag>
-        <Title>{titulo}</Title>
+        <HeroNavInner>
+          <NavLink to="/">Restaurantes</NavLink>
+          <LogoImg src={logoImg} alt="efood" />
+          <CartText>0 produto(s) no carrinho</CartText>
+        </HeroNavInner>
       </div>
-    </HeroContent>
-  </HeroWrapper>
+    </HeroNav>
+    <HeroImage $bg={capa}>
+      <HeroType>
+        <div className="container">
+          <RestaurantType>{tipo}</RestaurantType>
+        </div>
+      </HeroType>
+      <HeroTitle>
+        <div className="container">
+          <RestaurantTitle>{titulo}</RestaurantTitle>
+        </div>
+      </HeroTitle>
+    </HeroImage>
+  </>
 )
 
 export default Hero

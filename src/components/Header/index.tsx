@@ -11,15 +11,13 @@ const HeaderBar = styled.header`
   text-align: center;
 `
 
-const Logo = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
-`
-
 const LogoImg = styled.img`
   width: 125px;
   height: auto;
+  margin-bottom: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 const Subtitle = styled.p`
@@ -34,9 +32,7 @@ const Subtitle = styled.p`
 
 const Header = () => (
   <HeaderBar>
-    <Logo>
-      <LogoImg src={logoImg} alt="efood" />
-    </Logo>
+    <LogoImg src={logoImg} alt="efood" />
     <Subtitle>
       Viva experiências gastronômicas<br />no conforto da sua casa
     </Subtitle>

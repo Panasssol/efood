@@ -4,10 +4,10 @@ import bgHeader from '../../assets/header-bg.png'
 import logoImg from '../../assets/logo.png'
 
 const HeroNav = styled.div`
+  background-color: #FFF8F2;
   background-image: url(${bgHeader});
   background-repeat: repeat;
   background-size: auto;
-  background-color: #FFF8F2;
 `
 
 const HeroNavInner = styled.div`
@@ -57,7 +57,16 @@ const HeroImage = styled.div<{ $bg: string }>`
   }
 `
 
-const HeroContent = styled.div`
+const HeroType = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding-top: 24px;
+`
+
+const HeroTitle = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -74,7 +83,6 @@ const RestaurantType = styled.span`
   line-height: 38px;
   color: #FFFFFF;
   display: block;
-  margin-bottom: 16px;
 `
 
 const RestaurantTitle = styled.h2`
@@ -104,12 +112,16 @@ const Hero = ({ titulo, tipo, capa }: HeroProps) => (
       </div>
     </HeroNav>
     <HeroImage $bg={capa}>
-      <HeroContent>
+      <HeroType>
         <div className="container">
           <RestaurantType>{tipo}</RestaurantType>
+        </div>
+      </HeroType>
+      <HeroTitle>
+        <div className="container">
           <RestaurantTitle>{titulo}</RestaurantTitle>
         </div>
-      </HeroContent>
+      </HeroTitle>
     </HeroImage>
   </>
 )

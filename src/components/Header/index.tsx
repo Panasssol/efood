@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../../store'
+//import { useSelector, useDispatch } from 'react-redux'
+//import type { RootState } from '../../store'
 //import { toggleCart } from '../../store/cartSlice'
 import bgHeader from '../../assets/header-bg.png'
 import logoImg from '../../assets/logo.png'

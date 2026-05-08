@@ -5,60 +5,67 @@ import { useDispatch } from 'react-redux'
 import { addItem } from '../../store/cartSlice'
 
 const Card = styled.div`
-  background-color: #E66767;
-  border-radius: 8px;
+  background: #E66767;
+  width: 320px;
+  height: 338px;
   overflow: hidden;
-  color: #FFF8F2;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
+  position: relative;
 `
 
 const Image = styled.img`
-  width: 100%;
-  height: 168px;
+  width: 304px;
+  height: 167px;
   object-fit: cover;
   display: block;
+  margin: 8px auto 0;
 `
 
 const Body = styled.div`
-  padding: 8px;
+  padding: 0 8px 8px;
 `
 
 const Title = styled.h4`
-  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 900;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFEBD9;
+  margin-top: 8px;
   margin-bottom: 8px;
 `
 
 const Description = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  font-weight: 300;
+  color: #FFEBD9;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 8px;
 `
 
 const Button = styled.button`
-  background-color: #FFF8F2;
-  color: #E66767;
+  display: block;
+  width: 304px;
+  height: 24px;
+  background: #FFEBD9;
   border: none;
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 700;
-  padding: 8px 12px;
-  border-radius: 4px;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #E66767;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #f0e6dc;
-  }
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
 `
 
 /* ===== MODAL ===== */
@@ -78,8 +85,7 @@ const Overlay = styled.div<{ $visible: boolean }>`
 
 const ModalBox = styled.div<{ $visible: boolean }>`
   background-color: #E66767;
-  color: #FFF8F2;
-  border-radius: 8px;
+  color: #FFEBD9;
   max-width: 1024px;
   width: 100%;
   display: flex;
@@ -100,12 +106,10 @@ const ModalImage = styled.img`
   min-height: 280px;
   object-fit: cover;
   display: block;
-  border-radius: 8px 0 0 8px;
 
   @media (max-width: 768px) {
     width: 100%;
     height: 220px;
-    border-radius: 8px 8px 0 0;
     min-height: auto;
   }
 `
@@ -119,20 +123,25 @@ const ModalContent = styled.div`
 `
 
 const ModalTitle = styled.h3`
-  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 900;
+  font-size: 18px;
+  color: #FFEBD9;
 `
 
 const ModalDescription = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  font-weight: 300;
+  color: #FFEBD9;
   flex: 1;
 `
 
 const ModalInfo = styled.p`
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  color: #FFEBD9;
   margin-top: 12px;
 
   span {
@@ -141,21 +150,17 @@ const ModalInfo = styled.p`
 `
 
 const ModalButton = styled.button<{ $added?: boolean }>`
-  background-color: ${(p) => (p.$added ? '#27ae60' : '#FFF8F2')};
-  color: ${(p) => (p.$added ? '#FFF8F2' : '#E66767')};
+  background: ${(p) => (p.$added ? '#27ae60' : '#FFEBD9')};
+  color: ${(p) => (p.$added ? '#FFEBD9' : '#E66767')};
   border: none;
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 700;
+  font-size: 14px;
   padding: 4px 8px;
-  border-radius: 4px;
   cursor: pointer;
   align-self: flex-start;
   margin-top: 16px;
-  transition: background-color 0.3s, color 0.3s, transform 0.15s;
-
-  &:hover {
-    opacity: 0.9;
-  }
+  transition: background-color 0.3s, color 0.3s;
 
   &:active {
     transform: scale(0.97);
@@ -168,7 +173,7 @@ const CloseButton = styled.button`
   right: 8px;
   background: none;
   border: none;
-  color: #FFF8F2;
+  color: #FFEBD9;
   font-size: 24px;
   cursor: pointer;
   line-height: 1;
@@ -178,11 +183,6 @@ const CloseButton = styled.button`
   align-items: center;
   justify-content: center;
   z-index: 2;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `
 
 type MenuItemProps = {
@@ -232,10 +232,8 @@ const MenuItemCard = ({ item }: MenuItemProps) => {
         <Body>
           <Title>{item.nome}</Title>
           <Description>{item.descricao}</Description>
-          <Button onClick={() => setShowModal(true)}>
-            Mais detalhes
-          </Button>
         </Body>
+        <Button onClick={() => setShowModal(true)}>Mais detalhes</Button>
       </Card>
 
       {showModal && (

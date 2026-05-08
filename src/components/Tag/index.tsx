@@ -3,13 +3,14 @@ import styled from 'styled-components'
 const TagContainer = styled.span`
   display: inline-block;
   background-color: #E66767;
-  color: #FFF8F2;
-  font-size: 12px;
+  color: #FFEBD9;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
   font-weight: 700;
-  padding: 6px 8px;
-  margin-right: 8px;
-  border-radius: 4px;
-  text-transform: capitalize;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  padding: 6px 10px;
 `
 
 type TagProps = {

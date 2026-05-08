@@ -21,13 +21,12 @@ const Sidebar = styled.aside<{ $open: boolean }>`
   width: 360px;
   max-width: 100%;
   background: #E66767;
-  color: #FFF8F2;
+  color: #FFEBD9;
   z-index: 201;
   transform: translateX(${(p) => (p.$open ? '0' : '100%')});
   transition: transform 0.35s ease;
   display: flex;
   flex-direction: column;
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
 `
 
 const SidebarHeader = styled.div`
@@ -35,10 +34,11 @@ const SidebarHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 32px 16px 16px;
-  border-bottom: 1px solid rgba(255, 248, 242, 0.2);
+  border-bottom: 1px solid rgba(255, 235, 217, 0.2);
 `
 
 const SidebarTitle = styled.h3`
+  font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 900;
 `
@@ -46,7 +46,7 @@ const SidebarTitle = styled.h3`
 const CloseBtn = styled.button`
   background: none;
   border: none;
-  color: #FFF8F2;
+  color: #FFEBD9;
   font-size: 22px;
   cursor: pointer;
   width: 32px;
@@ -54,11 +54,6 @@ const CloseBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.7;
-  }
 `
 
 const ItemList = styled.ul`
@@ -74,9 +69,8 @@ const ItemList = styled.ul`
 const CartItemCard = styled.li`
   display: flex;
   gap: 8px;
-  background: #FFF8F2;
+  background: #FFEBD9;
   color: #E66767;
-  border-radius: 8px;
   padding: 8px;
   position: relative;
 `
@@ -85,7 +79,6 @@ const ItemImg = styled.img`
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 4px;
   flex-shrink: 0;
 `
 
@@ -98,6 +91,7 @@ const ItemInfo = styled.div`
 `
 
 const ItemName = styled.h4`
+  font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 900;
   white-space: nowrap;
@@ -106,6 +100,7 @@ const ItemName = styled.h4`
 `
 
 const ItemPrice = styled.span`
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: 700;
 `
@@ -121,22 +116,18 @@ const RemoveBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.6;
-  }
 `
 
-const Footer = styled.div`
+const FooterArea = styled.div`
   padding: 16px;
-  border-top: 1px solid rgba(255, 248, 242, 0.2);
+  border-top: 1px solid rgba(255, 235, 217, 0.2);
 `
 
 const TotalRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 16px;
@@ -144,42 +135,32 @@ const TotalRow = styled.div`
 
 const CheckoutBtn = styled.button`
   width: 100%;
-  background: #FFF8F2;
+  background: #FFEBD9;
   color: #E66767;
   border: none;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: 700;
   padding: 4px 0;
-  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.2s;
   margin-bottom: 8px;
-
-  &:hover {
-    background: #f0e6dc;
-  }
 `
 
 const ClearBtn = styled.button`
   width: 100%;
   background: transparent;
-  color: #FFF8F2;
-  border: 1px solid #FFF8F2;
+  color: #FFEBD9;
+  border: 1px solid #FFEBD9;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: 700;
   padding: 4px 0;
-  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-
-  &:hover {
-    background: #FFF8F2;
-    color: #E66767;
-  }
 `
 
 const EmptyMsg = styled.p`
   text-align: center;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
   font-weight: 300;
   padding: 40px 0;
@@ -239,7 +220,7 @@ const Cart = () => {
         </ItemList>
 
         {items.length > 0 && (
-          <Footer>
+          <FooterArea>
             <TotalRow>
               <span>Valor total</span>
               <span>{formatPrice(totalPrice)}</span>
@@ -250,7 +231,7 @@ const Cart = () => {
             <ClearBtn onClick={() => dispatch(clear())}>
               Limpar carrinho
             </ClearBtn>
-          </Footer>
+          </FooterArea>
         )}
       </Sidebar>
     </>

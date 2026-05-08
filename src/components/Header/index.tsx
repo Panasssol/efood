@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '../../store'
-import { toggleCart } from '../../store/cartSlice'
+//import { toggleCart } from '../../store/cartSlice'
 import bgHeader from '../../assets/header-bg.png'
 import logoImg from '../../assets/logo.png'
 
@@ -41,10 +41,10 @@ const Subtitle = styled.p`
 `
 
 const Header = () => {
-  const dispatch = useDispatch()
+  /* const dispatch = useDispatch()
   const totalItems = useSelector((state: RootState) =>
     state.cart.items.reduce((sum, i) => sum + i.quantidade, 0)
-  )
+  ) */
 
   return (
     <HeaderBar>

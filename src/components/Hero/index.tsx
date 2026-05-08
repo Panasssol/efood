@@ -1,5 +1,8 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '../../store'
+import { toggleCart } from '../../store/cartSlice'
 import bgHeader from '../../assets/header-bg.png'
 import logoImg from '../../assets/logo.png'
 
@@ -27,7 +30,9 @@ const NavLink = styled(Link)`
   text-decoration: none;
 `
 
-const CartText = styled.span`
+const CartButton = styled.button`
+  background: none;
+  border: none;
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 900;
@@ -35,6 +40,7 @@ const CartText = styled.span`
   line-height: 21px;
   text-align: right;
   color: #E66767;
+  cursor: pointer;
 `
 
 const LogoImg = styled.img`
@@ -100,30 +106,39 @@ type HeroProps = {
   capa: string
 }
 
-const Hero = ({ titulo, tipo, capa }: HeroProps) => (
-  <>
-    <HeroNav>
-      <div className="container">
-        <HeroNavInner>
-          <NavLink to="/">Restaurantes</NavLink>
-          <LogoImg src={logoImg} alt="efood" />
-          <CartText>0 produto(s) no carrinho</CartText>
-        </HeroNavInner>
-      </div>
-    </HeroNav>
-    <HeroImage $bg={capa}>
-      <HeroType>
+const Hero = ({ titulo, tipo, capa }: HeroProps) => {
+  const dispatch = useDispatch()
+  const totalItems = useSelector((state: RootState) =>
+    state.cart.items.reduce((sum, i) => sum + i.quantidade, 0)
+  )
+
+  return (
+    <>
+      <HeroNav>
         <div className="container">
-          <RestaurantType>{tipo}</RestaurantType>
+          <HeroNavInner>
+            <NavLink to="/">Restaurantes</NavLink>
+            <LogoImg src={logoImg} alt="efood" />
+            <CartButton onClick={() => dispatch(toggleCart())}>
+              {totalItems} produto(s) no carrinho
+            </CartButton>
+          </HeroNavInner>
         </div>
-      </HeroType>
-      <HeroTitle>
-        <div className="container">
-          <RestaurantTitle>{titulo}</RestaurantTitle>
-        </div>
-      </HeroTitle>
-    </HeroImage>
-  </>
-)
+      </HeroNav>
+      <HeroImage $bg={capa}>
+        <HeroType>
+          <div className="container">
+            <RestaurantType>{tipo}</RestaurantType>
+          </div>
+        </HeroType>
+        <HeroTitle>
+          <div className="container">
+            <RestaurantTitle>{titulo}</RestaurantTitle>
+          </div>
+        </HeroTitle>
+      </HeroImage>
+    </>
+  )
+}
 
 export default Hero

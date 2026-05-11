@@ -23,91 +23,99 @@ const Overlay = styled.div<{ $open: boolean }>`
 const Sidebar = styled.aside<{ $open: boolean }>`
   position: fixed; top: 0; right: 0; bottom: 0;
   width: 360px; max-width: 100%;
-  background: #E66767; color: #FFF8F2; z-index: 201;
+  background: #E66767; color: #FFEBD9; z-index: 201;
   transform: translateX(${p => p.$open ? '0' : '100%'});
   transition: transform 0.35s ease;
   display: flex; flex-direction: column;
-  box-shadow: -4px 0 24px rgba(0,0,0,0.2);
 `
 
-const Header = styled.div`
+const SidebarHeader = styled.div`
   display: flex; justify-content: space-between; align-items: center;
   padding: 32px 16px 16px;
-  border-bottom: 1px solid rgba(255,248,242,0.2);
+  border-bottom: 1px solid rgba(255,235,217,0.2);
 `
 
-const Title = styled.h3`font-size:18px;font-weight:900;`
+const SidebarTitle = styled.h3`
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px; font-weight: 900;
+`
 
 const CloseBtn = styled.button`
-  background:none; border:none; color:#FFF8F2; font-size:22px;
-  cursor:pointer; width:32px; height:32px;
-  display:flex; align-items:center; justify-content:center;
-  &:hover{opacity:0.7;}
+  background: none; border: none; color: #FFEBD9; font-size: 22px;
+  cursor: pointer; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
 `
 
 const Content = styled.div`
-  flex:1; overflow-y:auto; padding:16px;
-  display:flex; flex-direction:column; gap:16px;
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 16px;
 `
 
 const CartItemCard = styled.li`
-  display:flex; gap:8px; background:#FFF8F2; color:#E66767;
-  border-radius:8px; padding:8px; position:relative; list-style:none;
+  display: flex; gap: 8px; background: #FFEBD9; color: #E66767;
+  padding: 8px; position: relative; list-style: none;
 `
 
-const ItemImg = styled.img`width:80px;height:80px;object-fit:cover;border-radius:4px;flex-shrink:0;`
+const ItemImg = styled.img`width:80px;height:80px;object-fit:cover;flex-shrink:0;`
 
 const ItemInfo = styled.div`flex:1;display:flex;flex-direction:column;justify-content:space-between;min-width:0;`
 
-const ItemName = styled.h4`font-size:18px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;`
+const ItemName = styled.h4`
+  font-family: 'Roboto', sans-serif;
+  font-size:18px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+`
 
-const ItemPrice = styled.span`font-size:14px;font-weight:700;`
+const ItemPrice = styled.span`
+  font-family: 'Roboto', sans-serif;
+  font-size:14px;font-weight:700;
+`
 
 const RemoveBtn = styled.button`
   position:absolute;bottom:8px;right:8px;background:none;border:none;
-  cursor:pointer;padding:4px;display:flex;&:hover{opacity:0.6;}
+  cursor:pointer;padding:4px;display:flex;
 `
 
-const Footer = styled.div`
-  padding:16px;
-  border-top: 1px solid rgba(255,248,242,0.2);
+const FooterArea = styled.div`
+  padding: 16px;
+  border-top: 1px solid rgba(255,235,217,0.2);
 `
 
 const TotalRow = styled.div`
-  display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-bottom:16px;
+  display:flex;justify-content:space-between;
+  font-family: 'Roboto', sans-serif;
+  font-size:14px;font-weight:700;margin-bottom:16px;
 `
 
 const Btn = styled.button<{ $outline?: boolean }>`
-  width:100%; border-radius:4px; font-size:14px; font-weight:700;
-  padding:4px 0; cursor:pointer; margin-bottom:8px;
+  width: 100%; font-family: 'Roboto', sans-serif;
+  font-size: 14px; font-weight: 700;
+  padding: 4px 0; cursor: pointer; margin-bottom: 8px;
   transition: background 0.2s, color 0.2s;
-
-  background: ${p => p.$outline ? 'transparent' : '#FFF8F2'};
-  color: ${p => p.$outline ? '#FFF8F2' : '#E66767'};
-  border: ${p => p.$outline ? '1px solid #FFF8F2' : 'none'};
-
-  &:hover {
-    background: #FFF8F2;
-    color: #E66767;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  background: ${p => p.$outline ? 'transparent' : '#FFEBD9'};
+  color: ${p => p.$outline ? '#FFEBD9' : '#E66767'};
+  border: ${p => p.$outline ? '1px solid #FFEBD9' : 'none'};
+  &:hover { background: #FFEBD9; color: #E66767; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
 `
 
-const EmptyMsg = styled.p`text-align:center;font-size:16px;font-weight:300;padding:40px 0;opacity:0.8;`
+const EmptyMsg = styled.p`
+  text-align:center;font-family:'Roboto',sans-serif;
+  font-size:16px;font-weight:300;padding:40px 0;opacity:0.8;
+`
 
 const FormGroup = styled.div`margin-bottom:12px;`
 
-const Label = styled.label`display:block;font-size:14px;font-weight:700;margin-bottom:4px;`
+const Label = styled.label`
+  display:block;font-family:'Roboto',sans-serif;
+  font-size:14px;font-weight:700;margin-bottom:4px;
+`
 
 const Input = styled.input`
-  width:100%; padding:8px; border:none; border-radius:4px;
-  font-size:14px; color:#333; background:#FFF8F2;
+  width:100%; padding:8px; border:none;
+  font-family:'Roboto',sans-serif; font-size:14px;
+  color:#333; background:#FFEBD9;
   &::placeholder{color:#999;}
-  &:focus{outline:2px solid #FFF8F2;}
+  &:focus{outline:2px solid #FFEBD9;}
 `
 
 const Row = styled.div`display:flex;gap:12px;`
@@ -186,10 +194,10 @@ const DeliveryForm = () => {
           <Input value={form.complement} onChange={e => change('complement', e.target.value)} placeholder="Apto, bloco..." />
         </FormGroup>
       </Content>
-      <Footer>
+      <FooterArea>
         <Btn onClick={submit}>Continuar com o pagamento</Btn>
         <Btn $outline onClick={() => dispatch(backToCart())}>Voltar para o carrinho</Btn>
-      </Footer>
+      </FooterArea>
     </>
   )
 }
@@ -290,12 +298,12 @@ const PaymentForm = () => {
           </FormGroup>
         </Row>
       </Content>
-      <Footer>
+      <FooterArea>
         <Btn onClick={submit} disabled={loading}>
           {loading ? 'Processando...' : 'Finalizar pedido'}
         </Btn>
         <Btn $outline onClick={() => dispatch(backToDelivery())}>Voltar para a entrega</Btn>
-      </Footer>
+      </FooterArea>
     </>
   )
 }
@@ -321,13 +329,13 @@ const Confirmation = () => {
           </p>
           <p>
             Lembre-se da importância de higienizar as mãos após o recebimento do pedido,
-            garantindo assim sua segurança e bem-estar durante a bytes refeição.
+            garantindo assim sua segurança e bem-estar durante a refeição.
           </p>
           <p>
             Esperamos que desfrute de uma deliciosa e agradável experiência gastronômica.
             Bom apetite!
           </p>
-          <div style={{marginTop:24,textAlign:'left',background:'rgba(255,248,242,0.15)',borderRadius:8,padding:16}}>
+          <div style={{marginTop:24,textAlign:'left',background:'rgba(255,235,217,0.15)',padding:16}}>
             <p><strong>Nº do pedido:</strong> {order?.orderId}</p>
             <p style={{marginTop:8}}><strong>Entregar para:</strong> {delivery.receiver}</p>
             <p style={{marginTop:4}}>
@@ -337,9 +345,9 @@ const Confirmation = () => {
           </div>
         </ConfirmBox>
       </Content>
-      <Footer>
+      <FooterArea>
         <Btn onClick={() => dispatch(finishOrder())}>Concluir</Btn>
-      </Footer>
+      </FooterArea>
     </>
   )
 }
@@ -373,14 +381,14 @@ const CartItems = () => {
         )}
       </Content>
       {items.length > 0 && (
-        <Footer>
+        <FooterArea>
           <TotalRow>
             <span>Valor total</span>
             <span>{formatPrice(totalPrice)}</span>
           </TotalRow>
           <Btn onClick={() => dispatch(goToDelivery())}>Continuar com a entrega</Btn>
           <Btn $outline onClick={() => dispatch(clear())}>Limpar carrinho</Btn>
-        </Footer>
+        </FooterArea>
       )}
     </>
   )
@@ -408,10 +416,10 @@ const Cart = () => {
     <>
       <Overlay $open={isOpen} onClick={() => dispatch(closeCart())}/>
       <Sidebar $open={isOpen}>
-        <Header>
-          <Title>{title}</Title>
+        <SidebarHeader>
+          <SidebarTitle>{title}</SidebarTitle>
           <CloseBtn onClick={() => dispatch(closeCart())}>✕</CloseBtn>
-        </Header>
+        </SidebarHeader>
 
         {step === 'cart' && <CartItems />}
         {step === 'delivery' && <DeliveryForm />}

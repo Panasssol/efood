@@ -30,15 +30,11 @@ const SocialIcon = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  svg {
-    fill: #E66767;
-  }
+  svg { fill: #E66767; }
 `
 
 const FooterText = styled.p`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;

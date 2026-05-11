@@ -5,7 +5,6 @@ const TagContainer = styled.span`
   background-color: #E66767;
   color: #FFEBD9;
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 700;
   font-size: 12px;
   line-height: 14px;

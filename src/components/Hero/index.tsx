@@ -22,7 +22,6 @@ const HeroNavInner = styled.div`
 
 const NavLink = styled(Link)`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 900;
   font-size: 18px;
   line-height: 21px;
@@ -34,7 +33,6 @@ const CartButton = styled.button`
   background: none;
   border: none;
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 900;
   font-size: 18px;
   line-height: 21px;
@@ -83,7 +81,6 @@ const HeroTitle = styled.div`
 
 const RestaurantType = styled.span`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 100;
   font-size: 32px;
   line-height: 38px;
@@ -93,7 +90,6 @@ const RestaurantType = styled.span`
 
 const RestaurantTitle = styled.h2`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 900;
   font-size: 32px;
   line-height: 38px;

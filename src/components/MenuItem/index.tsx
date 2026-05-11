@@ -26,7 +26,6 @@ const Body = styled.div`
 
 const Title = styled.h4`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 900;
   font-size: 16px;
   line-height: 19px;
@@ -37,7 +36,6 @@ const Title = styled.h4`
 
 const Description = styled.p`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -56,7 +54,6 @@ const Button = styled.button`
   background: #FFEBD9;
   border: none;
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
@@ -67,8 +64,6 @@ const Button = styled.button`
   bottom: 8px;
   left: 8px;
 `
-
-/* ===== MODAL ===== */
 
 const Overlay = styled.div<{ $visible: boolean }>`
   position: fixed;
@@ -143,10 +138,7 @@ const ModalInfo = styled.p`
   font-size: 14px;
   color: #FFEBD9;
   margin-top: 12px;
-
-  span {
-    font-weight: 300;
-  }
+  span { font-weight: 300; }
 `
 
 const ModalButton = styled.button<{ $added?: boolean }>`
@@ -161,10 +153,7 @@ const ModalButton = styled.button<{ $added?: boolean }>`
   align-self: flex-start;
   margin-top: 16px;
   transition: background-color 0.3s, color 0.3s;
-
-  &:active {
-    transform: scale(0.97);
-  }
+  &:active { transform: scale(0.97); }
 `
 
 const CloseButton = styled.button`
@@ -206,9 +195,7 @@ const MenuItemCard = ({ item }: MenuItemProps) => {
       document.body.style.overflow = ''
       setAnimateIn(false)
     }
-    return () => {
-      document.body.style.overflow = ''
-    }
+    return () => { document.body.style.overflow = '' }
   }, [showModal])
 
   const handleClose = () => {
@@ -244,13 +231,9 @@ const MenuItemCard = ({ item }: MenuItemProps) => {
             <ModalContent>
               <ModalTitle>{item.nome}</ModalTitle>
               <ModalDescription>{item.descricao}</ModalDescription>
-              <ModalInfo>
-                Serve: <span>{item.porcao}</span>
-              </ModalInfo>
+              <ModalInfo>Serve: <span>{item.porcao}</span></ModalInfo>
               <ModalButton $added={added} onClick={handleAddToCart}>
-                {added
-                  ? '✓ Adicionado!'
-                  : `Adicionar ao carrinho - ${formatPrice(item.preco)}`}
+                {added ? '✓ Adicionado!' : `Adicionar ao carrinho - ${formatPrice(item.preco)}`}
               </ModalButton>
             </ModalContent>
           </ModalBox>

@@ -41,7 +41,6 @@ const TitleRow = styled.div`
 
 const Title = styled.h3`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -50,7 +49,6 @@ const Title = styled.h3`
 
 const Rating = styled.span`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -72,7 +70,6 @@ const Star = styled.span`
 
 const Description = styled.p`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -90,7 +87,6 @@ const ButtonLink = styled(Link)`
   height: 24px;
   background: #E66767;
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 24px;

@@ -1,7 +1,4 @@
 import styled from 'styled-components'
-//import { useSelector, useDispatch } from 'react-redux'
-//import type { RootState } from '../../store'
-//import { toggleCart } from '../../store/cartSlice'
 import bgHeader from '../../assets/header-bg.png'
 import logoImg from '../../assets/logo.png'
 
@@ -12,13 +9,6 @@ const HeaderBar = styled.header`
   background-size: auto;
   padding: 64px 0 48px;
   text-align: center;
-  position: relative;
-`
-
-const HeaderInner = styled.div`
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 16px;
 `
 
 const LogoImg = styled.img`
@@ -32,7 +22,6 @@ const LogoImg = styled.img`
 
 const Subtitle = styled.p`
   font-family: 'Roboto', sans-serif;
-  font-style: normal;
   font-weight: 900;
   font-size: 36px;
   line-height: 42px;
@@ -40,22 +29,13 @@ const Subtitle = styled.p`
   color: #E66767;
 `
 
-const Header = () => {
-  /* const dispatch = useDispatch()
-  const totalItems = useSelector((state: RootState) =>
-    state.cart.items.reduce((sum, i) => sum + i.quantidade, 0)
-  ) */
-
-  return (
-    <HeaderBar>
-      <HeaderInner>
-        <LogoImg src={logoImg} alt="efood" />
-        <Subtitle>
-          Viva experiências gastronômicas<br />no conforto da sua casa
-        </Subtitle>
-      </HeaderInner>
-    </HeaderBar>
-  )
-}
+const Header = () => (
+  <HeaderBar>
+    <LogoImg src={logoImg} alt="efood" />
+    <Subtitle>
+      Viva experiências gastronômicas<br />no conforto da sua casa
+    </Subtitle>
+  </HeaderBar>
+)
 
 export default Header

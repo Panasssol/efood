@@ -151,22 +151,33 @@ const DeliveryForm = () => {
   const change = (field: keyof DeliveryData, value: string) =>
     setForm(prev => ({ ...prev, [field]: value }))
 
+  const onlyNumbers = (value: string) => value.replace(/\D/g, '')
+
+  const changeNumeric = (field: keyof DeliveryData, value: string) =>
+    change(field, onlyNumbers(value))
+
   const submit = () => {
-    const missing: string[] = []
-    if (!form.receiver.trim()) missing.push('Quem irá receber')
-    if (!form.address.trim()) missing.push('Endereço')
-    if (!form.city.trim()) missing.push('Cidade')
-    if (!form.zipCode.trim()) missing.push('CEP')
-    if (!form.number.trim()) missing.push('Número')
-    if (missing.length) { setErrors(missing); return }
-    dispatch(setDelivery(form))
+    const errs: string[] = []
+    if (!form.receiver.trim()) errs.push('Quem irá receber é obrigatório')
+    if (!form.address.trim()) errs.push('Endereço é obrigatório')
+    if (!form.city.trim()) errs.push('Cidade é obrigatória')
+
+    const zipDigits = onlyNumbers(form.zipCode)
+    if (!zipDigits) errs.push('CEP é obrigatório')
+    else if (zipDigits.length !== 8) errs.push('CEP deve ter 8 números')
+
+    const numDigits = onlyNumbers(form.number)
+    if (!numDigits) errs.push('Número é obrigatório')
+
+    if (errs.length) { setErrors(errs); return }
+    dispatch(setDelivery({ ...form, zipCode: zipDigits, number: numDigits }))
   }
 
   return (
     <>
       <Content>
         <h3 style={{fontSize:16,fontWeight:900}}>Entrega</h3>
-        {errors.length > 0 && <ErrorText>Preencha: {errors.join(', ')}</ErrorText>}
+        {errors.length > 0 && <ErrorText>{errors.join('. ')}</ErrorText>}
         <FormGroup>
           <Label>Quem irá receber</Label>
           <Input value={form.receiver} onChange={e => change('receiver', e.target.value)} placeholder="Nome completo" />
@@ -182,11 +193,22 @@ const DeliveryForm = () => {
         <Row>
           <FormGroup style={{flex:1}}>
             <Label>CEP</Label>
-            <Input value={form.zipCode} onChange={e => change('zipCode', e.target.value)} placeholder="00000-000" />
+            <Input
+              value={form.zipCode}
+              onChange={e => changeNumeric('zipCode', e.target.value)}
+              placeholder="00000000"
+              maxLength={8}
+              inputMode="numeric"
+            />
           </FormGroup>
           <FormGroup style={{flex:1}}>
             <Label>Número</Label>
-            <Input value={form.number} onChange={e => change('number', e.target.value)} placeholder="000" />
+            <Input
+              value={form.number}
+              onChange={e => changeNumeric('number', e.target.value)}
+              placeholder="000"
+              inputMode="numeric"
+            />
           </FormGroup>
         </Row>
         <FormGroup>
@@ -214,16 +236,37 @@ const PaymentForm = () => {
   const change = (field: keyof PaymentData, value: string) =>
     setForm(prev => ({ ...prev, [field]: value }))
 
-  const submit = async () => {
-    const missing: string[] = []
-    if (!form.cardName.trim()) missing.push('Nome no cartão')
-    if (!form.cardNumber.trim()) missing.push('Número do cartão')
-    if (!form.cvv.trim()) missing.push('CVV')
-    if (!form.expMonth.trim()) missing.push('Mês')
-    if (!form.expYear.trim()) missing.push('Ano')
-    if (missing.length) { setErrors(missing); return }
+  const onlyNumbers = (value: string) => value.replace(/\D/g, '')
 
-    dispatch(setPayment(form))
+  const changeNumeric = (field: keyof PaymentData, value: string) =>
+    change(field, onlyNumbers(value))
+
+  const submit = async () => {
+    const errs: string[] = []
+    if (!form.cardName.trim()) errs.push('Nome no cartão é obrigatório')
+
+    const cardDigits = onlyNumbers(form.cardNumber)
+    if (!cardDigits) errs.push('Número do cartão é obrigatório')
+    else if (cardDigits.length !== 16) errs.push('Número do cartão deve ter 16 dígitos')
+
+    const cvvDigits = onlyNumbers(form.cvv)
+    if (!cvvDigits) errs.push('CVV é obrigatório')
+    else if (cvvDigits.length !== 3) errs.push('CVV deve ter 3 dígitos')
+
+    const monthDigits = onlyNumbers(form.expMonth)
+    if (!monthDigits) errs.push('Mês de vencimento é obrigatório')
+    else {
+      const monthNum = Number(monthDigits)
+      if (monthNum < 1 || monthNum > 12) errs.push('Mês de vencimento deve ser entre 01 e 12')
+    }
+
+    const yearDigits = onlyNumbers(form.expYear)
+    if (!yearDigits) errs.push('Ano de vencimento é obrigatório')
+    else if (yearDigits.length !== 4) errs.push('Ano de vencimento deve ter 4 dígitos')
+
+    if (errs.length) { setErrors(errs); return }
+
+    dispatch(setPayment({ ...form, cardNumber: cardDigits, cvv: cvvDigits, expMonth: monthDigits, expYear: yearDigits }))
     setLoading(true)
 
     const body = {
@@ -241,11 +284,11 @@ const PaymentForm = () => {
       payment: {
         card: {
           name: form.cardName,
-          number: form.cardNumber,
-          code: Number(form.cvv) || 0,
+          number: cardDigits,
+          code: Number(cvvDigits) || 0,
           expires: {
-            month: Number(form.expMonth) || 0,
-            year: Number(form.expYear) || 0
+            month: Number(monthDigits) || 0,
+            year: Number(yearDigits) || 0
           }
         }
       }
@@ -273,7 +316,7 @@ const PaymentForm = () => {
         <h3 style={{fontSize:16,fontWeight:900}}>
           Pagamento - Valor a pagar {formatPrice(items.reduce((s,i) => s + i.preco * i.quantidade, 0))}
         </h3>
-        {errors.length > 0 && <ErrorText>Preencha: {errors.join(', ')}</ErrorText>}
+        {errors.length > 0 && <ErrorText>{errors.join('. ')}</ErrorText>}
         {apiError && <ErrorText>{apiError}</ErrorText>}
         <FormGroup>
           <Label>Nome no cartão</Label>
@@ -281,20 +324,45 @@ const PaymentForm = () => {
         </FormGroup>
         <FormGroup>
           <Label>Número do cartão</Label>
-          <Input value={form.cardNumber} onChange={e => change('cardNumber', e.target.value)} placeholder="0000 0000 0000 0000" />
+          <Input
+            value={form.cardNumber}
+            onChange={e => changeNumeric('cardNumber', e.target.value)}
+            placeholder="0000000000000000"
+            maxLength={16}
+            inputMode="numeric"
+          />
         </FormGroup>
         <FormGroup>
           <Label>CVV</Label>
-          <Input value={form.cvv} onChange={e => change('cvv', e.target.value)} placeholder="000" style={{width:100}} />
+          <Input
+            value={form.cvv}
+            onChange={e => changeNumeric('cvv', e.target.value)}
+            placeholder="000"
+            maxLength={3}
+            inputMode="numeric"
+            style={{width:100}}
+          />
         </FormGroup>
         <Row>
           <FormGroup style={{flex:1}}>
             <Label>Mês de vencimento</Label>
-            <Input value={form.expMonth} onChange={e => change('expMonth', e.target.value)} placeholder="MM" />
+            <Input
+              value={form.expMonth}
+              onChange={e => changeNumeric('expMonth', e.target.value)}
+              placeholder="MM"
+              maxLength={2}
+              inputMode="numeric"
+            />
           </FormGroup>
           <FormGroup style={{flex:1}}>
             <Label>Ano de vencimento</Label>
-            <Input value={form.expYear} onChange={e => change('expYear', e.target.value)} placeholder="AAAA" />
+            <Input
+              value={form.expYear}
+              onChange={e => changeNumeric('expYear', e.target.value)}
+              placeholder="AAAA"
+              maxLength={4}
+              inputMode="numeric"
+            />
           </FormGroup>
         </Row>
       </Content>
